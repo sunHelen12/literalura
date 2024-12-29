@@ -5,8 +5,7 @@ public class Autor {
     private String nome;
     private Integer dataNascimento;
     private Integer dataFalecimento;
-
-    
+        
     public Long getId() {
         return id;
     }
@@ -31,7 +30,7 @@ public class Autor {
     public void setDataFalecimento(Integer dataFalecimento) {
         this.dataFalecimento = dataFalecimento;
     }
-    
+
     @Override
     public String toString() {
         return "Autor - ID: " + id 
