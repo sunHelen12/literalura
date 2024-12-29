@@ -2,6 +2,8 @@ package br.com.alura.literalura.model;
 
 import java.util.List;
 
+import br.com.alura.literalura.util.ControleUtil;
+
 public class Livro {
     private Long id;
     private String titulo;
@@ -11,8 +13,17 @@ public class Livro {
 
     public Livro(){}
 
-    public Livro (Livro livro){
-        
+    public Livro (DadosLivro livro){
+        this.titulo = ControleUtil.limitarCaracteres(livro.titulo(), 255);
+        this.numeroDeDownloads = livro.numeroDeDownloads();
+        if(!livro.idioma().isEmpty()){
+            this.idioma = livro.idioma().get(0);
+        }if(!livro.autores().isEmpty()){
+            for(DadosAutor autor : livro.autores()){
+                this.autor = new Autor(autor);
+                break;
+            }
+        }
     }
     
     public Long getId() {

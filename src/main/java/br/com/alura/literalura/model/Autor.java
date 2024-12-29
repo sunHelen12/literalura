@@ -5,7 +5,9 @@ public class Autor {
     private String nome;
     private Integer dataNascimento;
     private Integer dataFalecimento;
-        
+    
+    public Autor(){}
+    
     public Long getId() {
         return id;
     }
