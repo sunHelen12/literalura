@@ -1,13 +1,29 @@
 package br.com.alura.literalura.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "autores")
 public class Autor {
     private Long id;
     private String nome;
     private Integer dataNascimento;
     private Integer dataFalecimento;
+    @ManyToOne
+    private Livro livro;
     
+    public Autor(String nome, Integer dataNascimento, Integer dataFalecimento, Livro livro) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.dataFalecimento = dataFalecimento;
+        this.livro = livro;
+    }
+
     public Autor(){}
-    
+
+    public Autor (Autor autor){}
+
     public Long getId() {
         return id;
     }

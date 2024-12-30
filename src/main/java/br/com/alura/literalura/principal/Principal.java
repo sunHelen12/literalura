@@ -1,17 +1,25 @@
 package br.com.alura.literalura.principal;
 
+import java.util.List;
 import java.util.Scanner;
 
+import br.com.alura.literalura.model.Livro;
+import br.com.alura.literalura.repository.LivroRepository;
 import br.com.alura.literalura.services.ConsumoAPI;
 import br.com.alura.literalura.services.ConverteDados;
 
 public class Principal {
-    private Scanner sc = new Scanner(System.in);    
+    private Scanner sc = new Scanner(System.in);
+    private final String ENDERECO = "http://gutendex.com/books/?search=";    
     private ConsumoAPI consumo = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
+    private LivroRepository repositorio;
+    private List<Livro> livros;  
+        
+    public Principal(LivroRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 
-    private final String ENDERECO = "http://gutendex.com/books/?search=";
-    
     public void exibeMenu(){
         var opcao = -1;
         while (opcao != 0) {
@@ -57,4 +65,10 @@ public class Principal {
         }
     }
     
+    private String buscarLivrosTitulo(){
+        System.out.print("Digite o Título do Livro: ");
+        var livroSelecionado = sc.nextLine();
+        return livroSelecionado;
+
+    }
 }

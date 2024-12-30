@@ -1,70 +1,99 @@
 package br.com.alura.literalura.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.com.alura.literalura.util.ControleUtil;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "books")
 public class Livro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String titulo;
-    private String idioma;
-    private Integer numeroDeDownloads;
-    private Autor autor;
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Autor> autores;
+    @Enumerated(EnumType.STRING)
+    private Idiomas idiomas;
+    private Double numeroDeDownloads;
 
     public Livro(){}
 
-    public Livro (DadosLivro livro){
-        this.titulo = ControleUtil.limitarCaracteres(livro.titulo(), 255);
-        this.numeroDeDownloads = livro.numeroDeDownloads();
-        if(!livro.idioma().isEmpty()){
-            this.idioma = livro.idioma().get(0);
-        }if(!livro.autores().isEmpty()){
-            for(DadosAutor autor : livro.autores()){
-                this.autor = new Autor(autor);
-                break;
-            }
+    public Livro (List<DadosLivro> resultados){}
+
+    public Livro ( String titulo, List<String> idiomas, Double numeroDeDownloads, List<DadosAutor> autores) {
+        this.titulo = titulo;
+        this.idiomas = Idiomas.fromString(idiomas.get(0));
+        this.numeroDeDownloads = numeroDeDownloads;
+        this.autores = new ArrayList<>();
+        for (DadosAutor autorInformacao : autores ) {
+            Autor autor = new Autor (autorInformacao.nome(), autorInformacao.dataNascimento(), autorInformacao.dataFalecimento(), this);
+            this.autores.add(autor);
         }
     }
-    
+     
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getTitulo() {
         return titulo;
     }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }    
+
+    public Idiomas getIdiomas() {
+        return idiomas;
     }
-    public String getIdioma() {
-        return idioma;
+
+    public void setIdiomas(Idiomas idiomas) {
+        this.idiomas = idiomas;
     }
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
-    }
-    public Integer getNumeroDeDownloads() {
+
+    public Double getNumeroDeDownloads() {
         return numeroDeDownloads;
     }
-    public void setNumeroDeDownloads(Integer numeroDeDownloads) {
+
+    public void setNumeroDeDownloads(Double numeroDeDownloads) {
         this.numeroDeDownloads = numeroDeDownloads;
     }
-    public Autor getAutor() {
-        return autor;
+
+    public List<Autor> getAutores() {
+        return autores;
     }
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
     }
-    
+
+
     @Override
     public String toString() {
         return "Livro - ID: " + id 
-                + ", Título: " + titulo 
-                + ", Idioma: " + idioma 
-                + ", Número de Downloads: " + numeroDeDownloads 
-                + ", Autor: " + autor;
+            + ", Título: " + titulo 
+            + ", Autores: " + autores 
+            + ", Idiomas: " + idiomas
+            + ", Número de Downloads: " + numeroDeDownloads;
     }
 
+    
     
 }
