@@ -1,7 +1,7 @@
 
 ---
 
-# Literalura 📚📚📚📚🚀🚀🚀🚀
+# Literalura 📚🚀🚀🚀🚀
 
 **Literalura** é um projeto desenvolvido como parte do **programa One Oracle Next Education** em parceria com a **Alura**. O objetivo do projeto é criar uma aplicação que permita aos usuários explorar e listar livros de domínio público em diferentes idiomas. A aplicação faz uso da API pública do **Gutendex** para obter os dados dos livros e utiliza um banco de dados **PostgreSQL** para armazenar as informações sobre livros e autores. A interação com o banco de dados é feita através de **JPA (Java Persistence API)** com **Hibernate** como provedor.
 
