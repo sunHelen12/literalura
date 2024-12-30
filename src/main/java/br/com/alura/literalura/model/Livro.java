@@ -1,70 +1,91 @@
 package br.com.alura.literalura.model;
 
-import java.util.List;
 
-import br.com.alura.literalura.util.ControleUtil;
+import java.util.stream.Collectors;
 
-public class Livro {
+import br.com.alura.literalura.model.records.DadosLivro;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "livros")
+public class Livro {   
+    @Id
     private Long id;
     private String titulo;
-    private String idioma;
+    @Enumerated(EnumType.STRING)
+    private Idioma idioma;
     private Integer numeroDeDownloads;
+    @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
 
     public Livro(){}
 
-    public Livro (DadosLivro livro){
-        this.titulo = ControleUtil.limitarCaracteres(livro.titulo(), 255);
+    public Livro(DadosLivro livro){
+        this.id = livro.id();
+        this.titulo = livro.titulo();
+        this.idioma = Idioma.fromString(livro.idiomas().stream()
+                        .limit(1).collect(Collectors.joining()));
         this.numeroDeDownloads = livro.numeroDeDownloads();
-        if(!livro.idioma().isEmpty()){
-            this.idioma = livro.idioma().get(0);
-        }if(!livro.autores().isEmpty()){
-            for(DadosAutor autor : livro.autores()){
-                this.autor = new Autor(autor);
-                break;
-            }
-        }
     }
-    
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getTitulo() {
         return titulo;
     }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-    public String getIdioma() {
+    }  
+
+    public Idioma getIdioma() {
         return idioma;
     }
-    public void setIdioma(String idioma) {
+
+    public void setIdioma(Idioma idioma) {
         this.idioma = idioma;
     }
+
     public Integer getNumeroDeDownloads() {
         return numeroDeDownloads;
     }
+
     public void setNumeroDeDownloads(Integer numeroDeDownloads) {
         this.numeroDeDownloads = numeroDeDownloads;
     }
+
     public Autor getAutor() {
         return autor;
     }
+
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
-    
+
     @Override
     public String toString() {
-        return "Livro - ID: " + id 
-                + ", Título: " + titulo 
-                + ", Idioma: " + idioma 
-                + ", Número de Downloads: " + numeroDeDownloads 
-                + ", Autor: " + autor;
-    }
+        return "\n======================LIVRO======================\n" +
+                    	"Id: " + id +
+                    	", Título: '" + titulo + '\'' +
+                    	", Idioma: " + idioma +
+                    	", Número de Downloads: " + numeroDeDownloads +
+                    	", Autor: " + autor +
+            	"\n=================================================\n";
 
+    }
     
+
 }
