@@ -72,7 +72,7 @@ public class Principal {
         }
     }
 
-    private void buscarLivrosTitulo(){
+    public void buscarLivrosTitulo(){
         System.out.println("""
                 ===========================================================
                           VOCÊ SELECIONOU BUSCAR LIVRO POR TÍTULO  
@@ -100,7 +100,7 @@ public class Principal {
                 "\nIdioma: " + livroBuscado.get().idiomas().stream().collect(Collectors.joining()) +
                 "\nNúmero de Downloads: " + livroBuscado.get().numeroDeDownloads() +
                 "\n==============================\n"
-                                );
+                );
                     
                 try {
                 List<Livro> livroEncontrado = livroBuscado.stream().map(a -> new Livro(a)).collect(Collectors.toList());
@@ -137,8 +137,24 @@ public class Principal {
                 
     }
 
-    private void listarLivrosRegistrados(){
+    public void listarLivrosRegistrados(){
+        System.out.println("""
+            ===========================================================
+                          LISTANDO LIVROS REGISTRADOS...
+            ============================================================
+            """);
         
+        List<Livro> livros = repositorio.buscarTodosOsLivros();
+        livros.forEach(l -> System.out.println(
+                    "\n=========== LIVRO ===========" +
+                            "\nTítulo: " + l.getTitulo() +
+                            "\nAutor: " + l.getAutor().getNome() +
+                            "\nIdioma: " + l.getIdioma().getIdioma() +
+                            "\nNúmero de Downloads: " + l.getNumeroDeDownloads() +
+                     "\n==============================\n"
+        ));
+
+
     }
 
     

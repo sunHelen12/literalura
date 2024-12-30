@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -21,6 +22,7 @@ public class Livro {
     private Idioma idioma;
     private Integer numeroDeDownloads;
     @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
 
     public Livro(){}
