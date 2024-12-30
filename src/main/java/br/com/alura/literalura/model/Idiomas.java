@@ -15,10 +15,10 @@ public enum Idiomas {
 
     public static Idiomas fromString(String text){
         for (Idiomas categoria : Idiomas.values())
-            if (categoria.idiomasUsuario.equalsIgnoreCase(texto)) {
+            if (categoria.idiomasUsuario.equalsIgnoreCase(text)) {
                 return categoria;
             }
 
-        throw new IllegalArgumentException("Nenhuma categoria encontrada: "+ texto)
+        throw new IllegalArgumentException("Nenhuma categoria encontrada: "+ text)
     }
 }

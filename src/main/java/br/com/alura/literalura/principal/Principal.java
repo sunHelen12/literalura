@@ -1,29 +1,31 @@
 package br.com.alura.literalura.principal;
 
+import java.lang.StackWalker.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
-import br.com.alura.literalura.model.Livro;
 import br.com.alura.literalura.repository.LivroRepository;
+import br.com.alura.literalura.resposta.RespostaAPI;
 import br.com.alura.literalura.services.ConsumoAPI;
 import br.com.alura.literalura.services.ConverteDados;
 
 public class Principal {
     private Scanner sc = new Scanner(System.in);
-    private final String ENDERECO = "http://gutendex.com/books/?search=";    
+    private final String ENDERECO = "http://gutendex.com/books/?search=";
     private ConsumoAPI consumo = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
     private LivroRepository repositorio;
-    private List<Livro> livros;  
-        
+    private List<Livro> livros;
+    Optional<Livro> livroBusca;
+
     public Principal(LivroRepository repositorio) {
         this.repositorio = repositorio;
     }
 
-    public void exibeMenu(){
+    public void exibeMenu() {
         var opcao = -1;
         while (opcao != 0) {
-
             var menu = """
             =====================================
                 Escolha uma opção:
@@ -33,8 +35,7 @@ public class Principal {
                 4 - Listar Autores Vivos em Determinado Ano
                 5 - Listar Livros em Determinado Idioma
                 0 - Sair
-                                        
-                """;
+            """;
 
             System.out.println(menu);
             opcao = sc.nextInt();
@@ -61,14 +62,9 @@ public class Principal {
                     break;
                 default:
                     System.out.println("Opção inválida");
-            }       
+            }
         }
     }
-    
-    private String buscarLivrosTitulo(){
-        System.out.print("Digite o Título do Livro: ");
-        var livroSelecionado = sc.nextLine();
-        return livroSelecionado;
 
-    }
+    
 }
