@@ -55,7 +55,7 @@ public class Principal {
                     listarLivrosRegistrados();
                     break;
                 case 3:
-                    //listarAutoresRegistrados();
+                    listarAutoresRegistrados();
                     break;
                 case 4:
                     //listarAutoresVivosAno();
@@ -72,7 +72,7 @@ public class Principal {
         }
     }
 
-    public void buscarLivrosTitulo(){
+    private void buscarLivrosTitulo(){
         System.out.println("""
                 ===========================================================
                           VOCÊ SELECIONOU BUSCAR LIVRO POR TÍTULO  
@@ -137,7 +137,7 @@ public class Principal {
                 
     }
 
-    public void listarLivrosRegistrados(){
+    private void listarLivrosRegistrados(){
         System.out.println("""
             ===========================================================
                           LISTANDO LIVROS REGISTRADOS...
@@ -157,5 +157,27 @@ public class Principal {
 
     }
 
+    private void listarAutoresRegistrados(){
+        System.out.println("""
+            ===========================================================
+                          LISTANDO AUTORES REGISTRADOS...
+            ============================================================
+            """);
+
+        List<Autor> autores = repositorio.findAll();
+        System.out.println();
+        autores.forEach(l -> System.out.println(
+            "\n=========== AUTORES ===========" +
+                "\nNome: " + l.getNome()+
+                "\nData de Nascimento: " + l.getDataNascimento() +
+                "\nData de Falacimento: " + l.getDataFalecimento() +
+                "\nLivros: " + l.getLivros().stream()
+                    .map(t -> t.getTitulo())
+                    .collect(Collectors.toList()) +
+            "\n==============================\n"
+        ));
+    }
+    
+    
     
 }
