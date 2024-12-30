@@ -1,6 +1,6 @@
 package br.com.alura.literalura.model;
 
-import java.util.List;
+
 import java.util.stream.Collectors;
 
 import br.com.alura.literalura.model.records.DadosLivro;

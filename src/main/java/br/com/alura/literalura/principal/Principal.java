@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-import br.com.alura.literalura.repository.LivroRepository;
-import br.com.alura.literalura.resposta.RespostaAPI;
 import br.com.alura.literalura.services.ConsumoAPI;
 import br.com.alura.literalura.services.ConverteDados;
 
@@ -15,13 +13,8 @@ public class Principal {
     private final String ENDERECO = "http://gutendex.com/books/?search=";
     private ConsumoAPI consumo = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
-    private LivroRepository repositorio;
-    private List<Livro> livros;
-    Optional<Livro> livroBusca;
-
-    public Principal(LivroRepository repositorio) {
-        this.repositorio = repositorio;
-    }
+    
+   
 
     public void exibeMenu() {
         var opcao = -1;
