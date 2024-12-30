@@ -58,7 +58,7 @@ public class Principal {
                     listarAutoresRegistrados();
                     break;
                 case 4:
-                    //listarAutoresVivosAno();
+                    listarAutoresVivosAno();
                     break;
                 case 5:
                    //listarLivrosIdioma();
@@ -177,7 +177,39 @@ public class Principal {
             "\n==============================\n"
         ));
     }
+
+    private void listarAutoresVivosAno(){
+        System.out.println("""
+            ===========================================================
+                    LISTANDO AUTORES VIVOS EM DETERMINADO ANO...
+            ============================================================
+            """);
+
+        System.out.print("Inisra o ano para verificar o autor: ");
+        try {
+            var ano = Integer.valueOf(sc.nextLine());
+            List<Autor> autores = repositorio.buscarAutoresVivos(ano);
+            if(!autores.isEmpty()){
+                System.out.println();
+                autores.forEach(a -> System.out.println(
+                    "\n=========== AUTORES VIVOS ===========" +
+                    "\nNome: " + a.getNome()+
+                    "\nData de Nascimento: " + a.getDataNascimento() +
+                    "\nData de Falacimento: " + a.getDataFalecimento() +
+                    "\nLivros: " + a.getLivros().stream()
+                        .map(l -> l.getTitulo())
+                        .collect(Collectors.toList()) +
+                    "\n======================================\n"
+                ));
+            }else{
+                System.out.println("Não há autores registrados.");
+            }        
+        } catch (NumberFormatException e) {
+            System.out.println("Insira um ano válido" + e.getMessage());
+        }
+        
+    } 
     
-    
+
     
 }
