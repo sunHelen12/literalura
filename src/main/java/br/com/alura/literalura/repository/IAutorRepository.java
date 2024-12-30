@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import br.com.alura.literalura.model.Autor;
+import br.com.alura.literalura.model.Idioma;
 import br.com.alura.literalura.model.Livro;
 
 public interface IAutorRepository extends JpaRepository<Autor, Long> {
@@ -23,4 +24,8 @@ public interface IAutorRepository extends JpaRepository<Autor, Long> {
 
     @Query("SELECT a FROM Autor a WHERE a.dataFalecimento >:ano")
     List<Autor> buscarAutoresVivos(@Param("ano")Integer ano);
+
+    @Query("SELECT l FROM Autor a JOIN a.livros l WHERE l.idioma = :idioma")
+    List<Livro> buscarLivrosPorIdioma(@Param("idioma") Idioma idioma);
+    
 }

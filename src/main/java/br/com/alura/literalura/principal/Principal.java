@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 import java.util.stream.Collectors;
 
+
 import br.com.alura.literalura.model.Autor;
 import br.com.alura.literalura.model.Dados;
+import br.com.alura.literalura.model.Idioma;
 import br.com.alura.literalura.model.Livro;
 import br.com.alura.literalura.model.records.DadosLivro;
 import br.com.alura.literalura.repository.IAutorRepository;
@@ -61,7 +63,7 @@ public class Principal {
                     listarAutoresVivosAno();
                     break;
                 case 5:
-                   //listarLivrosIdioma();
+                   listarLivrosIdioma();
                     break;
                 case 0:
                     System.out.println("SAINDO DO LITERALURA...");
@@ -76,7 +78,7 @@ public class Principal {
         System.out.println("""
                 ===========================================================
                           VOCÊ SELECIONOU BUSCAR LIVRO POR TÍTULO  
-                ============================================================
+                ===========================================================
                 """);
                 
         System.out.print("Inisra o título do livro: ");
@@ -141,7 +143,7 @@ public class Principal {
         System.out.println("""
             ===========================================================
                           LISTANDO LIVROS REGISTRADOS...
-            ============================================================
+            ===========================================================
             """);
         
         List<Livro> livros = repositorio.buscarTodosOsLivros();
@@ -161,7 +163,7 @@ public class Principal {
         System.out.println("""
             ===========================================================
                           LISTANDO AUTORES REGISTRADOS...
-            ============================================================
+            ===========================================================
             """);
 
         List<Autor> autores = repositorio.findAll();
@@ -182,7 +184,7 @@ public class Principal {
         System.out.println("""
             ===========================================================
                     LISTANDO AUTORES VIVOS EM DETERMINADO ANO...
-            ============================================================
+            ===========================================================
             """);
 
         System.out.print("Inisra o ano para verificar o autor: ");
@@ -192,7 +194,7 @@ public class Principal {
             if(!autores.isEmpty()){
                 System.out.println();
                 autores.forEach(a -> System.out.println(
-                    "\n=========== AUTORES VIVOS ===========" +
+                    "\n============= AUTOR VIVO =============" +
                     "\nNome: " + a.getNome()+
                     "\nData de Nascimento: " + a.getDataNascimento() +
                     "\nData de Falacimento: " + a.getDataFalecimento() +
@@ -210,6 +212,73 @@ public class Principal {
         
     } 
     
+    private void listarLivrosIdioma(){
+        System.out.println("""
+            ===========================================================
+                          LISTANDO LIVROS POR IDIOMA...
+            ===========================================================
+            """);
+        var menu = """
+            ===========================================================
+                               ESCOLHA UM IDIOMA:
+            ===========================================================
+            1. Português(pt)
+            2. Inglês(en)
+            3. Espanhol(es)
+            4. Francês(fr)
+            5. Italiano(it)
+            ===========================================================
+
+            """;
+
+        System.out.println(menu);
+        var opcao = Integer.parseInt(sc.nextLine());
+
+        switch (opcao) {
+            case 1:
+                buscarLivrosPorIdioma("PORTUGUESE");
+                break;
+            case 2:
+                buscarLivrosPorIdioma("ENGLISH");
+                break;
+            case 3:
+                buscarLivrosPorIdioma("SPANISH"); 
+                break;
+            case 4:
+                buscarLivrosPorIdioma("FRENCH");
+                break;
+            case 5:
+                buscarLivrosPorIdioma("ITALIAN");
+                break;           
+            default:
+                System.out.println("Opção inválida!");
+                break;
+            }
+       
+    }
+
+    private void buscarLivrosPorIdioma(String idioma){
+        try{
+            Idioma idioma2 = Idioma.valueOf(idioma.toUpperCase());
+            List<Livro> livros = repositorio.buscarLivrosPorIdioma(idioma2);
+            if(livros.isEmpty()){
+                System.out.println("Não há livros com esse idioma.");
+            }else{
+                System.out.println();
+                livros.forEach(l -> System.out.println( 
+                    "\n=========== LIVRO ===========" +
+                    "\nTítulo: " + l.getTitulo() +
+                    "\nAutor: " + l.getAutor().getNome() +
+                    "\nIdioma: " + l.getIdioma().getIdioma() +
+                    "\nNúmero de Downloads: " + l.getNumeroDeDownloads() +
+                    "\n==============================\n"
+
+                ));
+            }
+        }catch(IllegalArgumentException e){
+            System.out.println("Ocorreu um erro! Tente buscar um idioma diferente.");
+        }
+    }
 
     
 }
